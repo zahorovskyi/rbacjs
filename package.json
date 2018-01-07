@@ -1,0 +1,41 @@
+{
+  "name": "rbacjs",
+  "version": "0.1.0",
+  "description": "Role based access control.",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "jest --coverage",
+    "build": "webpack",
+    "prepublish": "jest"
+  },
+  "author": "Alexandr Zahorovskyi <zahorovskiy.a.a@gmail.com> (https://github.com/zahorovskyi)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zahorovskyi/rbacjs/issues"
+  },
+  "homepage": "https://github.com/zahorovskyi/rbacjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zahorovskyi/rbacjs.git"
+  },
+  "devDependencies": {
+    "@types/jest": "^22.0.1",
+    "jest": "^22.0.4",
+    "ts-jest": "^22.0.1",
+    "ts-loader": "^3.2.0",
+    "typescript": "^2.6.2",
+    "webpack": "^3.10.0"
+  },
+  "dependencies": {},
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "src/__tests__/.*\\.(ts|tsx|js)$"
+  }
+}
