@@ -4,7 +4,8 @@
   "description": "Role based access control.",
   "main": "dist/index.js",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest",
+    "test-codecov": "jest && codecov",
     "build": "webpack",
     "prepublish": "jest"
   },
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "@types/jest": "^22.0.1",
+    "codecov": "^3.0.0",
     "jest": "^22.0.4",
     "ts-jest": "^22.0.1",
     "ts-loader": "^3.2.0",
@@ -28,6 +30,8 @@
   },
   "dependencies": {},
   "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true,
     "moduleFileExtensions": [
       "ts",
       "tsx",
