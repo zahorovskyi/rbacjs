@@ -24,7 +24,7 @@ interface IMiddleware {
 }
 
 interface IRBAC {
-    addUserRoles: (userId: string, role: string) => void;
+    addUserRole: (userId: string, role: string) => void;
     isAllowed: (userId: string, permissionId: string) => boolean | Error;
     extendRole: (role: string, extendingRoles: string[]) => void | Error;
     middleware: IMiddleware;
@@ -58,7 +58,7 @@ class RBAC implements IRBAC {
         if (typeof this.users[userId] !== 'undefined') {
             return this.users[userId].role;
         } else {
-            this.generateError(userId + ' userId is nor defined, please add user to the rbac using addUserRoles method');
+            this.generateError(userId + ' userId is nor defined, please add user to the rbac using addUserRole method');
         }
     }
 
@@ -89,7 +89,7 @@ class RBAC implements IRBAC {
 
             return rolePermission.includes(permissionId);
         } else {
-            this.generateError(userId + ' userId is nor defined, please add user to the rbac using addUserRoles method');
+            this.generateError(userId + ' userId is nor defined, please add user to the rbac using addUserRole method');
         }
     }
 
