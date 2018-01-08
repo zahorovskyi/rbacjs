@@ -6,6 +6,7 @@
 [![dependencies Status](https://david-dm.org/zahorovskyi/rbacjs/status.svg)](https://david-dm.org/zahorovskyi/rbacjs)
 [![devDependencies Status](https://david-dm.org/zahorovskyi/rbacjs/dev-status.svg)](https://david-dm.org/zahorovskyi/rbacjs?type=dev)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/zahorovskyi/rbacjs/issues)
+[![codecov.io Code Coverage](https://img.shields.io/codecov/c/github/zahorovskyi/rbacjs.svg)](https://codecov.io/github/zahorovskyi/rbacjs?branch=master)
 
 [![NPM](https://nodei.co/npm/rbacjs.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/rbacjs/)
 
