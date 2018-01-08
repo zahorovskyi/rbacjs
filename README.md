@@ -1,6 +1,11 @@
 # rbacjs
 
 ### Role base access control
+[![Build Status](https://travis-ci.org/zahorovskyi/rbacjs.svg?branch=master)](https://travis-ci.org/zahorovskyi/rbacjs)
+[![NPM version](https://badge.fury.io/js/rbacjs.svg)](https://nodei.co/npm/rbacjs/)
+[![dependencies Status](https://david-dm.org/zahorovskyi/rbacjs/status.svg)](https://david-dm.org/zahorovskyi/rbacjs)
+[![devDependencies Status](https://david-dm.org/zahorovskyi/rbacjs/dev-status.svg)](https://david-dm.org/zahorovskyi/rbacjs?type=dev)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/zahorovskyi/rbacjs/issues)
 
 [![NPM](https://nodei.co/npm/rbacjs.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/rbacjs/)
 
