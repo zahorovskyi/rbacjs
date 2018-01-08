@@ -1,6 +1,6 @@
 {
   "name": "rbacjs",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Role based access control.",
   "main": "dist/index.js",
   "scripts": {
