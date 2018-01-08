@@ -4,8 +4,8 @@
   "description": "Role based access control.",
   "main": "dist/index.js",
   "scripts": {
-    "test": "jest",
-    "test-codecov": "jest && codecov",
+    "test:development": "jest",
+    "test": "jest && codecov",
     "build": "webpack",
     "prepublish": "jest"
   },
