@@ -41,5 +41,10 @@
       "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testRegex": "src/__tests__/.*\\.(ts|tsx|js)$"
-  }
+  },
+  "keywords": [
+    "rbac",
+    "rbacjs",
+    "role base access control"
+  ]
 }
