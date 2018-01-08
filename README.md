@@ -14,9 +14,58 @@ Super simple role base access control library.
 The easiest API and implementation.
 Can be used on the ***client*** and ***server*** side.
 
-### Examples:
 ##### See basic example in [example.js](https://github.com/zahorovskyi/rbacjs/blob/master/example/example.js)
-##### Express example:
+
+#### API:
+
+Initialize RBAC with config:
+```
+const rbacConfig = {
+    rolesConfig: [
+        {
+            roles: ['VIEWER_ROLE'], // role name
+            permissions: ['PERMISSION_ID_1', 'PERMISSION_ID_3'] // permission name
+        },
+        {
+            roles: ['USER_ROLE', 'USER2_ROLE'], // role name
+            permissions: ['PERMISSION_ID_2'] // permission name
+        }
+    ]
+};
+const rbac = new RBAC(rolesConfig);
+```
+Get role for user:
+```
+rbac.getUserRoles(userId: string) => string[] | throw Error;
+```
+Add user to RBAC with role:
+```
+rbac.addUserRoles(userId: string, roles: string[]) => undefined | throw Error;
+```
+Check permission for user:
+```
+rbac.isAllowed(userId: string, permissionId: string) => boolead | throw Error;
+```
+Extend role:
+```
+rbac.extendRole(role: string, extendingRoles: string[]) => undefined | throw Error;
+
+// example, expand manager role with viewers and users rights:
+rbac.extendRole('manager', extendingRoles: ['viewer', 'user']);
+```
+Middleware method:
+```
+rbac.middleware(
+    params: {
+        userId: string;
+        permissionId: string;
+    },
+    error: () => void,
+    success: () => void
+)
+```
+
+##### Express middleware example:
 ```
 app.use((req, res, next) => {
     rbac.middleware(
@@ -31,7 +80,7 @@ app.use((req, res, next) => {
     );
 });
 ```
-##### Redux example:
+##### Redux middleware example:
 ```
 const rbacMiddleware = store => next => action => {
     rbac.middleware(
@@ -58,50 +107,4 @@ const store = createStore(
         rbacMiddleware
     )
 );
-```
-
-#### API:
-
-Initialize RBAC with config:
-```
-const rbacConfig = {
-    rolesConfig: [
-        {
-            roles: ['VIEWER_ROLE'], // role name
-            permissions: ['PERMISSION_ID_1', 'PERMISSION_ID_3'] // permission name
-        },
-        {
-            roles: ['USER_ROLE', 'USER2_ROLE'], // role name
-            permissions: ['PERMISSION_ID_2'] // permission name
-        }
-    ]
-};
-const rbac = new RBAC(rolesConfig);
-```
-Get role for user:
-```
-rbac.getUserRole(userId: string);
-```
-Add user to RBAC with role:
-```
-rbac.addUserRole(userId: string, role: string);
-```
-Check permission for user:
-```
-rbac.isAllowed(userId: string, permissionId: string);
-```
-Extend role :
-```
-rbac.extendRole(role: string, extendingRoles: string[])
-```
-Middleware method:
-```
-rbac.middleware(
-    params: {
-        userId: string;
-        permissionId: string;
-    },
-    error: () => void,
-    success: () => void
-)
 ```

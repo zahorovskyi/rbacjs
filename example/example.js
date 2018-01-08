@@ -26,15 +26,22 @@ const rbacConfig = {
 
 const rbac = new RBAC(rbacConfig);
 
+const userId = 'userId';
+
 /**
  * Add userId with 'viewer' role
  */
-rbac.addUserRole('userId', VIEWER_ROLE);
+rbac.addUserRoles(userId, [VIEWER_ROLE]);
+
+/**
+ * Get roles for userId
+ */
+rbac.getUserRoles(userId);
 
 /**
  * Check if user with 'userId' have PERMISSION_ID_1
  */
-rbac.isAllowed('userId', PERMISSION_ID_1);
+rbac.isAllowed(userId, PERMISSION_ID_1);
 
 /**
  * Expand the role of the viewer with user permission
@@ -51,8 +58,8 @@ const rbacMiddleware = (data, error, success) => {
 
 rbacMiddleware(
     {
-        userId: 'userId',
-        permissionId: 'permissionId'
+        userId: userId,
+        permissionId: PERMISSION_ID_1
     },
     () => {
         console.log('error callback');

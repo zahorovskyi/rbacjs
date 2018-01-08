@@ -36,65 +36,65 @@ describe('initializing stage tests suite', () => {
     });
 });
 
-describe('addUserRole method tests suite', () => {
-    test('[addUserRole] should add user with defined role', () => {
+describe('addUserRoles method tests suite', () => {
+    test('[addUserRoles] should add user with defined role', () => {
         const rbac = new RBAC(rbacConfig);
         const userId = 'uniqueId';
-        const userRole = 'user';
+        const userRoles = ['user'];
         const expected = {
-            [userId]: {role: userRole}
+            [userId]: {roles: userRoles}
         };
 
-        rbac.addUserRole(userId, userRole);
+        rbac.addUserRoles(userId, userRoles);
 
         expect(rbac.users).toEqual(expected);
     });
 
-    test('[addUserRole] should return error because of incoming data is incorrect, trying to add user without role', () => {
+    test('[addUserRoles] should return error because of incoming data is incorrect, trying to add user without role', () => {
         const rbac = new RBAC(rbacConfig);
         const userId = 'uniqueId';
 
         expect(() => {
-            rbac.addUserRole(userId, undefined);
+            rbac.addUserRoles(userId, undefined);
         }).toThrowError();
     });
 
-    test('[addUserRole] should return error because of incoming data is incorrect, trying to add user with role which was not defined', () => {
+    test('[addUserRoles] should return error because of incoming data is incorrect, trying to add user with role which was not defined', () => {
         const rbac = new RBAC(rbacConfig);
         const userId = 'uniqueId';
-        const userRole = 'is not defined role';
+        const userRoles = ['is not defined role'];
 
         expect(() => {
-            rbac.addUserRole(userId, userRole);
+            rbac.addUserRoles(userId, userRoles);
         }).toThrowError();
     });
 });
 
-describe('getUserRole method tests suite', () => {
-    test('[getUserRole] should get user role', () => {
+describe('getUserRoles method tests suite', () => {
+    test('[getUserRoles] should get user role', () => {
         const rbac = new RBAC(rbacConfig);
         const userId = 'uniqueId';
-        const userRole = 'user';
+        const userRoles = ['user'];
 
-        rbac.addUserRole(userId, userRole);
+        rbac.addUserRoles(userId, userRoles);
 
-        expect(rbac.getUserRole(userId)).toEqual(userRole);
+        expect(rbac.getUserRoles(userId)).toEqual(userRoles);
     });
 
-    test('[getUserRole] should return error because of incoming data is incorrect, trying to get user without passing userId', () => {
+    test('[getUserRoles] should return error because of incoming data is incorrect, trying to get user without passing userId', () => {
         const rbac = new RBAC(rbacConfig);
 
         expect(() => {
-            rbac.getUserRole(undefined);
+            rbac.getUserRoles(undefined);
         }).toThrowError();
     });
 
-    test('[getUserRole] should return error because of incoming data is incorrect, trying to get user without adding it before', () => {
+    test('[getUserRoles] should return error because of incoming data is incorrect, trying to get user without adding it before', () => {
         const rbac = new RBAC(rbacConfig);
         const userId = 'uniqueId';
 
         expect(() => {
-            rbac.getUserRole(userId);
+            rbac.getUserRoles(userId);
         }).toThrowError();
     });
 });
@@ -103,10 +103,10 @@ describe('isAllowed method tests suite', () => {
     test('[isAllowed] should return correct isAllowed result, user do not have permission', () => {
         const rbac = new RBAC(rbacConfig);
         const userId = 'uniqueId';
-        const userRole = 'manager';
+        const userRoles = ['manager'];
         const permissionId = '2';
 
-        rbac.addUserRole(userId, userRole);
+        rbac.addUserRoles(userId, userRoles);
 
         expect(rbac.isAllowed(userId, permissionId)).toEqual(false);
     });
@@ -114,10 +114,10 @@ describe('isAllowed method tests suite', () => {
     test('[isAllowed] should return correct isAllowed result, user have permission', () => {
         const rbac = new RBAC(rbacConfig);
         const userId = 'uniqueId';
-        const userRole = 'manager';
-        const permissionId = '3';
+        const userRoles = ['manager', 'user'];
+        const permissionId = '2';
 
-        rbac.addUserRole(userId, userRole);
+        rbac.addUserRoles(userId, userRoles);
 
         expect(rbac.isAllowed(userId, permissionId)).toEqual(true);
     });
@@ -221,7 +221,7 @@ describe('middleware method tests suite', () => {
         const errorCallback = jest.fn();
         const successCallback = jest.fn();
 
-        rbac.addUserRole(userId, 'manager');
+        rbac.addUserRoles(userId, ['manager']);
         rbac.middleware(
             {
                 userId: userId,
@@ -241,7 +241,7 @@ describe('middleware method tests suite', () => {
         const errorCallback = jest.fn();
         const successCallback = jest.fn();
 
-        rbac.addUserRole(userId, 'manager');
+        rbac.addUserRoles(userId, ['manager']);
         rbac.middleware(
             {
                 userId: userId,
