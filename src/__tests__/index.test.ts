@@ -1,5 +1,9 @@
 import RBAC from '../index';
 
+global.console = {
+    warn: jest.fn()
+};
+
 const rbacConfig = {
     rolesConfig: [
         {
@@ -18,7 +22,8 @@ const rbacConfig = {
             roles: ['admin'],
             permissions: ['4']
         }
-    ]
+    ],
+    quietError: true
 };
 
 const expectedPermissions = {
@@ -54,9 +59,7 @@ describe('addUserRoles method tests suite', () => {
         const rbac = new RBAC(rbacConfig);
         const userId = 'uniqueId';
 
-        expect(() => {
-            rbac.addUserRoles(userId, undefined);
-        }).toThrowError();
+        expect(rbac.addUserRoles(userId, undefined)).toBeInstanceOf(Error);
     });
 
     test('[addUserRoles] should return error because of incoming data is incorrect, trying to add user with role which was not defined', () => {
@@ -64,9 +67,7 @@ describe('addUserRoles method tests suite', () => {
         const userId = 'uniqueId';
         const userRoles = ['is not defined role'];
 
-        expect(() => {
-            rbac.addUserRoles(userId, userRoles);
-        }).toThrowError();
+        expect(rbac.addUserRoles(userId, userRoles)).toEqual(expect.arrayContaining([expect.any(Error)]));
     });
 });
 
@@ -84,18 +85,14 @@ describe('getUserRoles method tests suite', () => {
     test('[getUserRoles] should return error because of incoming data is incorrect, trying to get user without passing userId', () => {
         const rbac = new RBAC(rbacConfig);
 
-        expect(() => {
-            rbac.getUserRoles(undefined);
-        }).toThrowError();
+        expect(rbac.getUserRoles(undefined)).toBeInstanceOf(Error);
     });
 
     test('[getUserRoles] should return error because of incoming data is incorrect, trying to get user without adding it before', () => {
         const rbac = new RBAC(rbacConfig);
         const userId = 'uniqueId';
 
-        expect(() => {
-            rbac.getUserRoles(userId);
-        }).toThrowError();
+        expect(rbac.getUserRoles(userId)).toBeInstanceOf(Error);
     });
 });
 
@@ -126,9 +123,7 @@ describe('isAllowed method tests suite', () => {
         const rbac = new RBAC(rbacConfig);
         const userId = 'uniqueId';
 
-        expect(() => {
-            rbac.isAllowed(userId, undefined);
-        }).toThrowError();
+        expect(rbac.isAllowed(userId, undefined)).toBeInstanceOf(Error);
     });
 
     test('[isAllowed] should return error because of incoming data is incorrect, trying to get permission for user which was not defined', () => {
@@ -136,9 +131,7 @@ describe('isAllowed method tests suite', () => {
         const userId = 'uniqueId';
         const permissionId = '3';
 
-        expect(() => {
-            rbac.isAllowed(userId, permissionId);
-        }).toThrowError();
+        expect(rbac.isAllowed(userId, permissionId)).toBeInstanceOf(Error);
     });
 });
 
@@ -147,9 +140,7 @@ describe('extendRole method tests suite', () => {
         const rbac = new RBAC(rbacConfig);
         const role = 'user';
 
-        expect(() => {
-            rbac.extendRole(role, []);
-        }).toThrowError();
+        expect(rbac.extendRole(role, [])).toBeInstanceOf(Error);
     });
 
     test('[extendRole] should return error because of incoming data is incorrect, trying to extend role which was not defined', () => {
@@ -157,9 +148,7 @@ describe('extendRole method tests suite', () => {
         const role = 'is not defined role';
         const extendingRoles = ['user'];
 
-        expect(() => {
-            rbac.extendRole(role, extendingRoles);
-        }).toThrowError();
+        expect(rbac.extendRole(role, extendingRoles)).toBeInstanceOf(Error);
     });
 
     test('[extendRole] should extend role', () => {
@@ -181,37 +170,44 @@ describe('extendRole method tests suite', () => {
         const role = 'manager';
         const extendingRoles = ['is not defined role'];
 
-        expect(() => {
-            rbac.extendRole(role, extendingRoles);
-        }).toThrowError();
+        expect(rbac.extendRole(role, extendingRoles)).toEqual(expect.arrayContaining([expect.any(Error)]));
+
     });
 });
 
 describe('generateError method tests suite', () => {
-    test('[generateError] should generate throw', () => {
+    test('[generateError] should generate error', () => {
         const rbac = new RBAC(rbacConfig);
 
-        expect(() => {
-            rbac.generateError('some error');
-        }).toThrowError();
+        expect(rbac.generateError('some error')).toBeInstanceOf(Error);
+    });
+
+    test('[generateError] should generate quiet error, without warning in console', () => {
+        rbacConfig.quietError = false;
+        const rbac = new RBAC(rbacConfig);
+
+        rbac.generateError('some error');
+
+        expect(global.console.warn).toHaveBeenCalled();
     });
 });
 
 describe('middleware method tests suite', () => {
-    test('[middleware] should return error because of incoming data is incorrect', () => {
+    test('[middleware] should return error and invoke error callback because of incoming data is incorrect', () => {
         const rbac = new RBAC(rbacConfig);
-        const errorCallback = () => {
-        };
+        const errorCallback = jest.fn();
         const successCallback = () => {
         };
 
-        expect(() => {
+        expect(
             rbac.middleware(
                 undefined,
                 errorCallback,
                 successCallback
             )
-        }).toThrowError();
+        ).toBeInstanceOf(Error);
+
+        expect(errorCallback).toHaveBeenCalled();
     });
 
     test('[middleware] should invoke error success callback', () => {
@@ -234,7 +230,7 @@ describe('middleware method tests suite', () => {
         expect(successCallback).toHaveBeenCalled();
     });
 
-    test('[middleware] should invoke error error callback', () => {
+    test('[middleware] should invoke error callback', () => {
         const rbac = new RBAC(rbacConfig);
         const userId = 'uniqueId';
         const permissionId = '2';

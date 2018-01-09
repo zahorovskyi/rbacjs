@@ -11,7 +11,7 @@ const USER2_ROLE = 'user2';
 const PERMISSION_ID_1 = 'permissionId_1';
 const PERMISSION_ID_2 = 'permissionId_2';
 
-const rbacConfig = {
+const rolesConfig = {
     rolesConfig: [
         {
             roles: [VIEWER_ROLE],
@@ -24,7 +24,7 @@ const rbacConfig = {
     ]
 };
 
-const rbac = new RBAC(rbacConfig);
+const rbac = new RBAC(rolesConfig);
 
 const userId = 'userId';
 
