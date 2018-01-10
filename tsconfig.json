@@ -1,9 +1,11 @@
 {
   "compilerOptions": {
+    "outDir": "",
     "module": "commonjs",
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
+    "declaration": true,
     "sourceMap": true,
     "lib": [
       "dom",

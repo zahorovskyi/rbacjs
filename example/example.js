@@ -21,7 +21,8 @@ const rolesConfig = {
             roles: [USER_ROLE, USER2_ROLE],
             permissions: [PERMISSION_ID_2]
         }
-    ]
+    ],
+    debug: false
 };
 
 const rbac = new RBAC(rolesConfig);

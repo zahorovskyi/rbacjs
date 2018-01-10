@@ -1,4 +1,5 @@
 const path = require('path');
+const { TSDeclerationsPlugin } = require('ts-loader-decleration');
 
 module.exports = {
     devtool: 'inline-source-map',
@@ -16,5 +17,10 @@ module.exports = {
         rules: [
             { test: /\.ts?$/, loader: 'ts-loader' }
         ]
-    }
-}
+    },
+    plugins: [
+        new TSDeclerationsPlugin({
+            main: './src/index.d.ts'
+        })
+    ]
+};

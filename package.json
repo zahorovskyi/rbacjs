@@ -3,6 +3,7 @@
   "version": "1.1.0",
   "description": "Role based access control.",
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "test:development": "jest",
     "test": "jest && codecov",
@@ -25,6 +26,7 @@
     "jest": "^22.0.4",
     "ts-jest": "^22.0.1",
     "ts-loader": "^3.2.0",
+    "ts-loader-decleration": "^0.10.4",
     "typescript": "^2.6.2",
     "webpack": "^3.10.0"
   },

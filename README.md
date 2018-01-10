@@ -27,7 +27,7 @@ interface IRolesConfig {
             permissions: string[]
         }
     ];
-    quietError?: boolean;               // do not print warnings in console, by default false
+    debug?: boolean;               // do not print warnings in console, by default true
 }
 
 const rolesConfig: IRolesConfig = {
@@ -46,7 +46,7 @@ rbac.getUserRoles(userId: string) => string[] | Error;
 ```
 Add user to RBAC with roles:
 ```
-rbac.addUserRoles(userId: string, roles: string[]) => void | Error | Error[];
+rbac.addUserRoles(userId: string, roles: string[]) => void | Error;
 ```
 Check permission for user:
 ```
@@ -54,7 +54,7 @@ rbac.isAllowed(userId: string, permissionId: string) => boolead | Error;
 ```
 Extend role:
 ```
-rbac.extendRole(role: string, extendingRoles: string[]) => void | Error | Error[];
+rbac.extendRole(role: string, extendingRoles: string[]) => void | Error;
 
 // example, expand manager role with viewers and users permissions:
 rbac.extendRole('manager', extendingRoles: ['viewer', 'user']);

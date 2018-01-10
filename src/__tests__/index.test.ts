@@ -23,7 +23,7 @@ const rbacConfig = {
             permissions: ['4']
         }
     ],
-    quietError: true
+    debug: false
 };
 
 const expectedPermissions = {
@@ -67,7 +67,7 @@ describe('addUserRoles method tests suite', () => {
         const userId = 'uniqueId';
         const userRoles = ['is not defined role'];
 
-        expect(rbac.addUserRoles(userId, userRoles)).toEqual(expect.arrayContaining([expect.any(Error)]));
+        expect(rbac.addUserRoles(userId, userRoles)).toBeInstanceOf(Error);
     });
 });
 
@@ -170,7 +170,7 @@ describe('extendRole method tests suite', () => {
         const role = 'manager';
         const extendingRoles = ['is not defined role'];
 
-        expect(rbac.extendRole(role, extendingRoles)).toEqual(expect.arrayContaining([expect.any(Error)]));
+        expect(rbac.extendRole(role, extendingRoles)).toBeInstanceOf(Error);
 
     });
 });
@@ -182,8 +182,8 @@ describe('generateError method tests suite', () => {
         expect(rbac.generateError('some error')).toBeInstanceOf(Error);
     });
 
-    test('[generateError] should generate quiet error, without warning in console', () => {
-        rbacConfig.quietError = false;
+    test('[generateError] should generate quiet error, with warning in console', () => {
+        rbacConfig.debug = true;
         const rbac = new RBAC(rbacConfig);
 
         rbac.generateError('some error');
