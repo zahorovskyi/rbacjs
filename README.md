@@ -48,6 +48,10 @@ Add user to RBAC with roles:
 ```
 rbac.addUserRoles(userId: string, roles: string[]) => void | Error;
 ```
+Remove users roles (in case if roles parameter is not defined, will be removed all roles for userId):
+```
+rbac.removeUserRoles(userId: string, roles?: string[]) => void | Error;
+```
 Check permission for user:
 ```
 rbac.isAllowed(userId: string, permissionId: string) => boolead | Error;

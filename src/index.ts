@@ -21,6 +21,7 @@ export interface IMiddleware {
 
 export interface IRBAC {
     getUserRoles: (userId: string) => string[] | Error;
+    removeUserRoles: (userId: string, role?: string[]) => void | Error;
     addUserRoles: (userId: string, role: string[]) => void | Error;
     isAllowed: (userId: string, permissionId: string) => boolean | Error;
     extendRole: (role: string, extendingRoles: string[]) => void | Error;
@@ -38,7 +39,7 @@ class RBAC implements IRBAC {
     private permissions: IPermissions = {};
 
     constructor(options: IOptions) {
-        this.debug = (typeof options.debug === 'undefined') ? true: options.debug;
+        this.debug = (typeof options.debug === 'undefined') ? true : options.debug;
 
         this.permissions = options.rolesConfig.reduce(
             (accumulator: any, item: IRolesConfig) => {
@@ -90,6 +91,26 @@ class RBAC implements IRBAC {
                 return this.generateError(roles[i] + ' role is not defined in intial config');
             }
         }
+    }
+
+
+    public removeUserRoles(userId: string, roles?: string[]) {
+        if (typeof userId === 'undefined') {
+            return this.generateError('userId is not defined, expected 1 arguments');
+        }
+
+        if (this.users[userId]) {
+            if (typeof roles === 'undefined') {
+                this.users[userId] = {roles: []};
+            } else {
+                for (let i = 0; i < roles.length; i++) {
+                    this.users[userId].roles.splice(this.users[userId].roles.indexOf(roles[i]), 1);
+                }
+            }
+        } else {
+            return this.generateError(userId + ' userId is nor defined, please add user to the rbac using addUserRoles method');
+        }
+
     }
 
     public isAllowed(userId: string, permissionId: string) {

@@ -10,6 +10,7 @@ export interface IMiddleware {
 }
 export interface IRBAC {
     getUserRoles: (userId: string) => string[] | Error;
+    removeUserRoles: (userId: string, role?: string[]) => void | Error;
     addUserRoles: (userId: string, role: string[]) => void | Error;
     isAllowed: (userId: string, permissionId: string) => boolean | Error;
     extendRole: (role: string, extendingRoles: string[]) => void | Error;
@@ -27,6 +28,7 @@ declare class RBAC implements IRBAC {
     private generateError(msg);
     getUserRoles(userId: string): string[] | Error;
     addUserRoles(userId: string, roles: string[]): Error;
+    removeUserRoles(userId: string, roles?: string[]): Error;
     isAllowed(userId: string, permissionId: string): boolean | Error;
     extendRole(role: string, extendingRoles: string[]): Error;
     middleware(params: {

@@ -35,6 +35,11 @@ const userId = 'userId';
 rbac.addUserRoles(userId, [VIEWER_ROLE]);
 
 /**
+ * Remove 'viewer' role for userId
+ */
+rbac.addUserRoles(userId, [VIEWER_ROLE]);
+
+/**
  * Get roles for userId
  */
 rbac.getUserRoles(userId);

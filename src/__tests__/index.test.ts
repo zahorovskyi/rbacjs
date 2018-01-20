@@ -71,6 +71,49 @@ describe('addUserRoles method tests suite', () => {
     });
 });
 
+describe('removeUserRoles method tests suite', () => {
+    test('[removeUserRoles] should remove all user roles', () => {
+        const rbac = new RBAC(rbacConfig);
+        const userId = 'uniqueId';
+        const userRoles = ['user', 'viewer'];
+        const expected = {
+            [userId]: {roles: []}
+        };
+
+        rbac.addUserRoles(userId, userRoles);
+        rbac.removeUserRoles(userId);
+
+        expect(rbac.users).toEqual(expected);
+    });
+
+    test('[removeUserRoles] should remove passed user roles', () => {
+
+        const rbac = new RBAC(rbacConfig);
+        const userId = 'uniqueId';
+        const userRoles = ['user', 'viewer'];
+        const expected = {
+            [userId]: {roles: ['viewer']}
+        };
+
+        rbac.addUserRoles(userId, userRoles);
+        rbac.removeUserRoles(userId, ['user']);
+
+        expect(rbac.users).toEqual(expected);
+
+    });
+
+    test('[removeUserRoles] should return error, trying to invoke method without parameters', () => {
+        const rbac = new RBAC(rbacConfig);
+        expect(rbac.removeUserRoles()).toBeInstanceOf(Error);
+    });
+
+    test('[removeUserRoles] should return error, trying to invoke method for undefined user', () => {
+        const rbac = new RBAC(rbacConfig);
+        const userId = 'userId';
+        expect(rbac.removeUserRoles(userId)).toBeInstanceOf(Error);
+    });
+});
+
 describe('getUserRoles method tests suite', () => {
     test('[getUserRoles] should get user role', () => {
         const rbac = new RBAC(rbacConfig);
