@@ -112,6 +112,20 @@ describe('removeUserRoles method tests suite', () => {
         const userId = 'userId';
         expect(rbac.removeUserRoles(userId)).toBeInstanceOf(Error);
     });
+
+    test('[removeUserRoles] should not remove roles', () => {
+        const rbac = new RBAC(rbacConfig);
+        const userId = 'uniqueId';
+        const userRoles = ['user', 'viewer'];
+        const expected = {
+            [userId]: {roles: ['user', 'viewer']}
+        };
+
+        rbac.addUserRoles(userId, userRoles);
+        rbac.removeUserRoles(userId, ['admin']);
+
+        expect(rbac.users).toEqual(expected);
+    });
 });
 
 describe('getUserRoles method tests suite', () => {

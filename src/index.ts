@@ -104,7 +104,10 @@ class RBAC implements IRBAC {
                 this.users[userId] = {roles: []};
             } else {
                 for (let i = 0; i < roles.length; i++) {
-                    this.users[userId].roles.splice(this.users[userId].roles.indexOf(roles[i]), 1);
+                    const roleIndex = this.users[userId].roles.indexOf(roles[i]);
+                    if (roleIndex + 1) {
+                        this.users[userId].roles.splice(roleIndex, 1);
+                    }
                 }
             }
         } else {
