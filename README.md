@@ -19,7 +19,7 @@ Can be used on the ***client*** and ***server*** side.
 #### API:
 
 Initialize RBAC with config:
-```
+``` javascript
 interface IRolesConfig {
     rolesConfig: [                      // array with roles configurations
         {
@@ -41,30 +41,30 @@ const rolesConfig: IRolesConfig = {
 const rbac = new RBAC(rolesConfig);
 ```
 Get roles list for user:
-```
+``` javascript
 rbac.getUserRoles(userId: string) => string[] | Error;
 ```
 Add user to RBAC with roles:
-```
+``` javascript
 rbac.addUserRoles(userId: string, roles: string[]) => void | Error;
 ```
 Remove users roles (in case if roles parameter is not defined, will be removed all roles for userId):
-```
+``` javascript
 rbac.removeUserRoles(userId: string, roles?: string[]) => void | Error;
 ```
 Check permission for user:
-```
+``` javascript
 rbac.isAllowed(userId: string, permissionId: string) => boolead | Error;
 ```
 Extend role:
-```
+``` javascript
 rbac.extendRole(role: string, extendingRoles: string[]) => void | Error;
 
 // example, expand manager role with viewers and users permissions:
 rbac.extendRole('manager', extendingRoles: ['viewer', 'user']);
 ```
 Middleware method, invoke success callback in case if user have permission or error callback if not:
-```
+``` javascript
 rbac.middleware(
     params: {
         userId: string;
@@ -76,7 +76,7 @@ rbac.middleware(
 ```
 
 ##### Express middleware example:
-```
+``` javascript
 app.use((req, res, next) => {
     rbac.middleware(
         {
@@ -91,7 +91,7 @@ app.use((req, res, next) => {
 });
 ```
 ##### Redux middleware example:
-```
+``` javascript
 const rbacMiddleware = store => next => action => {
     rbac.middleware(
         {
