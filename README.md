@@ -14,7 +14,7 @@ Super simple role base access control library.
 The easiest API and implementation.
 Can be used on the ***client*** and ***server*** side.
 
-##### See basic example in [example.js](https://github.com/zahorovskyi/rbacjs/blob/master/example/example.js)
+##### See basic example in [example.js](https://github.com/zahorovskyi/rbacjs/blob/master/examples/general/index.js)
 
 #### API:
 

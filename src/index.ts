@@ -1,12 +1,8 @@
-import { type } from "os";
-
 interface IUsers {
-    [userId: string]: {
-        roles: string[]
-    }
+    [userId: string]: string[]
 }
 
-interface IPermissions {
+interface IRoles {
     [permissionId: string]: string[];
 }
 
@@ -28,20 +24,20 @@ export interface IRBAC {
     middleware: IMiddleware;
 }
 
-export interface IOptions {
+export interface IConfig {
     rolesConfig: IRolesConfig[];
     debug?: boolean;
 }
 
 class RBAC implements IRBAC {
-    private users: IUsers = {};
     private debug: boolean;
-    private permissions: IPermissions = {};
+    private users: IUsers = {};
+    private roles: IRoles = {};
 
-    constructor(options: IOptions) {
-        this.debug = (typeof options.debug === 'undefined') ? true : options.debug;
+    constructor(config: IConfig) {
+        this.debug = (typeof config.debug === 'undefined') ? true : config.debug;
 
-        this.permissions = options.rolesConfig.reduce(
+        this.roles = config.rolesConfig.reduce(
             (accumulator: any, item: IRolesConfig) => {
                 for (let i = 0; i < item.roles.length; i++) {
                     accumulator[item.roles[i]] = item.permissions;
@@ -65,7 +61,7 @@ class RBAC implements IRBAC {
         }
 
         if (typeof this.users[userId] !== 'undefined') {
-            return this.users[userId].roles;
+            return this.users[userId];
         } else {
             return this.generateError(userId + ' userId is nor defined, please add user to the rbac using addUserRoles method');
         }
@@ -77,18 +73,16 @@ class RBAC implements IRBAC {
         }
 
         for (let i = 0; i < roles.length; i++) {
-            if (typeof this.permissions[roles[i]] !== 'undefined') {
+            if (typeof this.roles[roles[i]] !== 'undefined') {
                 if (this.users[userId]) {
-                    if (!this.users[userId].roles.includes(roles[i])) {
-                        this.users[userId].roles.push(roles[i]);
+                    if (!this.users[userId].includes(roles[i])) {
+                        this.users[userId].push(roles[i]);
                     }
                 } else {
-                    this.users[userId] = {
-                        roles: [roles[i]]
-                    };
+                    this.users[userId] = [roles[i]];
                 }
             } else {
-                return this.generateError(roles[i] + ' role is not defined in intial config');
+                return this.generateError(roles[i] + ' role is not defined in initial config');
             }
         }
     }
@@ -101,12 +95,12 @@ class RBAC implements IRBAC {
 
         if (this.users[userId]) {
             if (typeof roles === 'undefined') {
-                this.users[userId] = {roles: []};
+                delete this.users[userId];
             } else {
                 for (let i = 0; i < roles.length; i++) {
-                    const roleIndex = this.users[userId].roles.indexOf(roles[i]);
+                    const roleIndex = this.users[userId].indexOf(roles[i]);
                     if (roleIndex + 1) {
-                        this.users[userId].roles.splice(roleIndex, 1);
+                        this.users[userId].splice(roleIndex, 1);
                     }
                 }
             }
@@ -124,7 +118,7 @@ class RBAC implements IRBAC {
         const user = this.users[userId];
 
         if (typeof user !== 'undefined') {
-            return user.roles.some(userRole => this.permissions[userRole].includes(permissionId));
+            return user.some(userRole => this.roles[userRole].includes(permissionId));
         } else {
             return this.generateError(userId + ' userId is nor defined, please add user to the rbac using addUserRoles method');
         }
@@ -135,11 +129,11 @@ class RBAC implements IRBAC {
             return this.generateError('role or extendingRoles is not defined, expected 2 arguments');
         }
 
-        if (typeof this.permissions[role] !== 'undefined') {
+        if (typeof this.roles[role] !== 'undefined') {
             for (let i = 0; i < extendingRoles.length; i++) {
-                if (this.permissions[extendingRoles[i]]) {
-                    this.permissions[role] = this.permissions[role]
-                        .concat(this.permissions[extendingRoles[i]]);
+                if (this.roles[extendingRoles[i]]) {
+                    this.roles[role] = this.roles[role]
+                        .concat(this.roles[extendingRoles[i]]);
                 } else {
                     return this.generateError(role + ' role is not defined in initial config');
                 }

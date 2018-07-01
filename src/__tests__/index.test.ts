@@ -1,5 +1,6 @@
 import RBAC from '../index';
 
+// @ts-ignore
 global.console = {
     warn: jest.fn()
 };
@@ -37,7 +38,8 @@ describe('initializing stage tests suite', () => {
     test('should initialize rbac module and create expected private permissions config from incoming data', () => {
         const rbac = new RBAC(rbacConfig);
 
-        expect(rbac.permissions).toEqual(expectedPermissions);
+        // @ts-ignore
+        expect(rbac.roles).toEqual(expectedPermissions);
     });
 });
 
@@ -47,11 +49,12 @@ describe('addUserRoles method tests suite', () => {
         const userId = 'uniqueId';
         const userRoles = ['user'];
         const expected = {
-            [userId]: {roles: userRoles}
+            [userId]: userRoles
         };
 
         rbac.addUserRoles(userId, userRoles);
 
+        // @ts-ignore
         expect(rbac.users).toEqual(expected);
     });
 
@@ -76,13 +79,12 @@ describe('removeUserRoles method tests suite', () => {
         const rbac = new RBAC(rbacConfig);
         const userId = 'uniqueId';
         const userRoles = ['user', 'viewer'];
-        const expected = {
-            [userId]: {roles: []}
-        };
+        const expected = {};
 
         rbac.addUserRoles(userId, userRoles);
         rbac.removeUserRoles(userId);
 
+        // @ts-ignore
         expect(rbac.users).toEqual(expected);
     });
 
@@ -92,18 +94,20 @@ describe('removeUserRoles method tests suite', () => {
         const userId = 'uniqueId';
         const userRoles = ['user', 'viewer'];
         const expected = {
-            [userId]: {roles: ['viewer']}
+            [userId]: ['viewer']
         };
 
         rbac.addUserRoles(userId, userRoles);
         rbac.removeUserRoles(userId, ['user']);
 
+        // @ts-ignore
         expect(rbac.users).toEqual(expected);
 
     });
 
     test('[removeUserRoles] should return error, trying to invoke method without parameters', () => {
         const rbac = new RBAC(rbacConfig);
+        // @ts-ignore
         expect(rbac.removeUserRoles()).toBeInstanceOf(Error);
     });
 
@@ -118,12 +122,13 @@ describe('removeUserRoles method tests suite', () => {
         const userId = 'uniqueId';
         const userRoles = ['user', 'viewer'];
         const expected = {
-            [userId]: {roles: ['user', 'viewer']}
+            [userId]: ['user', 'viewer']
         };
 
         rbac.addUserRoles(userId, userRoles);
         rbac.removeUserRoles(userId, ['admin']);
 
+        // @ts-ignore
         expect(rbac.users).toEqual(expected);
     });
 });
@@ -219,7 +224,8 @@ describe('extendRole method tests suite', () => {
 
         rbac.extendRole(role, extendingRoles);
 
-        expect(rbac.permissions).toEqual(expected);
+        // @ts-ignore
+        expect(rbac.roles).toEqual(expected);
     });
 
     test('[extendRole] should return error because of incoming data is incorrect, extending role which was not defined', () => {
@@ -236,6 +242,7 @@ describe('generateError method tests suite', () => {
     test('[generateError] should generate error', () => {
         const rbac = new RBAC(rbacConfig);
 
+        // @ts-ignore
         expect(rbac.generateError('some error')).toBeInstanceOf(Error);
     });
 
@@ -243,6 +250,7 @@ describe('generateError method tests suite', () => {
         rbacConfig.debug = true;
         const rbac = new RBAC(rbacConfig);
 
+        // @ts-ignore
         rbac.generateError('some error');
 
         expect(global.console.warn).toHaveBeenCalled();
