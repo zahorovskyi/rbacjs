@@ -16,16 +16,16 @@ export interface IRBAC {
     extendRole: (role: string, extendingRoles: string[]) => void | Error;
     middleware: IMiddleware;
 }
-export interface IOptions {
+export interface IConfig {
     rolesConfig: IRolesConfig[];
     debug?: boolean;
 }
 declare class RBAC implements IRBAC {
-    private users;
     private debug;
-    private permissions;
-    constructor(options: IOptions);
-    private generateError(msg);
+    private users;
+    private roles;
+    constructor(config: IConfig);
+    private generateError;
     getUserRoles(userId: string): string[] | Error;
     addUserRoles(userId: string, roles: string[]): Error;
     removeUserRoles(userId: string, roles?: string[]): Error;
