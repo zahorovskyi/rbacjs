@@ -14,13 +14,18 @@ Super simple role base access control library.
 The easiest API and implementation.
 Can be used on the ***client*** and ***server*** side.
 
-##### See basic example in [example.js](https://github.com/zahorovskyi/rbacjs/blob/master/examples/general/index.js)
+#### Examples:
+[Basic example](https://github.com/zahorovskyi/rbacjs/blob/master/examples/simple.js)
+
+[Redux](https://github.com/zahorovskyi/rbacjs/blob/master/examples/redux.js)
+
+[ExpressJS](https://github.com/zahorovskyi/rbacjs/blob/master/examples/express.js)
 
 #### API:
 
 Initialize RBAC with config:
 ``` javascript
-interface IRolesConfig {
+interface IRBACConfig {
     rolesConfig: [                      // array with roles configurations
         {
             roles: string[],
@@ -30,7 +35,7 @@ interface IRolesConfig {
     debug?: boolean;               // do not print warnings in console, by default true
 }
 
-const rolesConfig: IRolesConfig = {
+const rbacConfig: IRBACConfig = {
     rolesConfig: [
         {
             roles: ['ROLE'],
@@ -38,7 +43,7 @@ const rolesConfig: IRolesConfig = {
         }
     ]
 };
-const rbac = new RBAC(rolesConfig);
+const rbac = new RBAC(rbacConfig);
 ```
 Get roles list for user:
 ``` javascript
