@@ -29,6 +29,7 @@ const action = payload => ({
 
 // 4. define rbac middleware when creating store
 const rbacMiddleware = store => next => action => {
+    // you can do "store.getState" here to avoid passing user data in an action
     rbac.middleware(
         {
             userId: action.payload.userId,
