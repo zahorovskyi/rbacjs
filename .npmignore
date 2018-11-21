@@ -1,2 +1,6 @@
 # Exclude folder with examples
-examples
+.idea/
+examples/
+.travis.yml
+tsconfig.json
+webpack.config.js
