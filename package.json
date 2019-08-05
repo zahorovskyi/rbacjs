@@ -32,6 +32,7 @@
   },
   "dependencies": {},
   "jest": {
+    "testURL": "http://localhost",
     "coverageDirectory": "./coverage/",
     "collectCoverage": true,
     "moduleFileExtensions": [
