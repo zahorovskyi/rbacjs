@@ -22,7 +22,7 @@ const rbacConfig = {
             permissions: [PERMISSION_ID_2]
         }
     ],
-    debug: false
+    debug: true
 };
 
 const rbac = new RBAC(rbacConfig);

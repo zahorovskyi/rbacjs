@@ -22,5 +22,6 @@ module.exports = {
         new TSDeclerationsPlugin({
             main: './src/index.d.ts'
         })
-    ]
+    ],
+    mode: "production"
 };

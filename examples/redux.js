@@ -10,7 +10,7 @@ const rbacConfig = {
             permissions: ['DELETE']
         }
     ],
-    debug: false
+    debug: true
 };
 
 const rbac = new RBAC(rbacConfig);
