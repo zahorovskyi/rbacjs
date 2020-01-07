@@ -1,6 +1,6 @@
 {
   "name": "rbacjs",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Role based access control.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -21,7 +21,7 @@
     "url": "https://github.com/zahorovskyi/rbacjs.git"
   },
   "devDependencies": {
-    "@types/jest": "^22.0.1",
+    "@types/jest": "^24.0.25",
     "codecov": "^3.6.1",
     "jest": "^25.0.0",
     "ts-jest": "^24.3.0",
