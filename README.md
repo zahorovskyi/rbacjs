@@ -2,7 +2,7 @@
 
 ### Role base access control
 [![Build Status](https://travis-ci.org/zahorovskyi/rbacjs.svg?branch=master)](https://travis-ci.org/zahorovskyi/rbacjs)
-[![codecov.io Code Coverage](https://img.shields.io/codecov/c/github/zahorovskyi/rbacjs.svg)](https://codecov.io/github/zahorovskyi/rbacjs?branch=master)
+[![codecov](https://codecov.io/gh/zahorovskyi/rbacjs/branch/master/graph/badge.svg)](https://codecov.io/gh/zahorovskyi/rbacjs)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/zahorovskyi/rbacjs/issues)
 
 [![NPM](https://nodei.co/npm/rbacjs.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/rbacjs/)
