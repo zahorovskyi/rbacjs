@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
-    "outDir": "",
+    "outDir": "dist",
     "module": "commonjs",
+    "target": "es5",
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,

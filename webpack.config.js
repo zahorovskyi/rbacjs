@@ -1,5 +1,4 @@
 const path = require('path');
-const { TSDeclerationsPlugin } = require('ts-loader-decleration');
 
 module.exports = {
     devtool: 'inline-source-map',
@@ -7,8 +6,10 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'index.js',
-        library: 'rbac',
-        libraryTarget: 'umd'
+        library: {
+            name: 'rbac',
+            type: 'umd'
+        }
     },
     resolve: {
         extensions: ['.ts']
@@ -18,10 +19,5 @@ module.exports = {
             { test: /\.ts?$/, loader: 'ts-loader' }
         ]
     },
-    plugins: [
-        new TSDeclerationsPlugin({
-            main: './src/index.d.ts'
-        })
-    ],
-    mode: "production"
+    mode: 'production'
 };

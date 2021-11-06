@@ -1,6 +1,6 @@
 import RBAC from '../index';
 
-// @ts-ignore
+// @ts-expect-error
 global.console = {
     warn: jest.fn()
 };
@@ -38,13 +38,13 @@ describe('initializing stage tests suite', () => {
     test('should initialize rbac module and create expected private permissions config from incoming data', () => {
         const rbac = new RBAC(rbacConfig);
 
-        // @ts-ignore
+        // @ts-expect-error
         expect(rbac.roles).toEqual(expectedPermissions);
     });
 });
 
 describe('addUserRoles method tests suite', () => {
-    test('[addUserRoles] should add user with defined role', () => {
+    test('should add user with defined role', () => {
         const rbac = new RBAC(rbacConfig);
         const userId = 'uniqueId';
         const userRoles = ['user'];
@@ -54,18 +54,18 @@ describe('addUserRoles method tests suite', () => {
 
         rbac.addUserRoles(userId, userRoles);
 
-        // @ts-ignore
+        // @ts-expect-error
         expect(rbac.users).toEqual(expected);
     });
 
-    test('[addUserRoles] should return error because of incoming data is incorrect, trying to add user without role', () => {
+    test('should return error because of incoming data is incorrect, trying to add user without role', () => {
         const rbac = new RBAC(rbacConfig);
         const userId = 'uniqueId';
 
         expect(rbac.addUserRoles(userId, undefined)).toBeInstanceOf(Error);
     });
 
-    test('[addUserRoles] should return error because of incoming data is incorrect, trying to add user with role which was not defined', () => {
+    test('should return error because of incoming data is incorrect, trying to add user with role which was not defined', () => {
         const rbac = new RBAC(rbacConfig);
         const userId = 'uniqueId';
         const userRoles = ['is not defined role'];
@@ -75,7 +75,7 @@ describe('addUserRoles method tests suite', () => {
 });
 
 describe('removeUserRoles method tests suite', () => {
-    test('[removeUserRoles] should remove all user roles', () => {
+    test('should remove all user roles', () => {
         const rbac = new RBAC(rbacConfig);
         const userId = 'uniqueId';
         const userRoles = ['user', 'viewer'];
@@ -84,11 +84,11 @@ describe('removeUserRoles method tests suite', () => {
         rbac.addUserRoles(userId, userRoles);
         rbac.removeUserRoles(userId);
 
-        // @ts-ignore
+        // @ts-expect-error
         expect(rbac.users).toEqual(expected);
     });
 
-    test('[removeUserRoles] should remove passed user roles', () => {
+    test('should remove passed user roles', () => {
 
         const rbac = new RBAC(rbacConfig);
         const userId = 'uniqueId';
@@ -100,24 +100,24 @@ describe('removeUserRoles method tests suite', () => {
         rbac.addUserRoles(userId, userRoles);
         rbac.removeUserRoles(userId, ['user']);
 
-        // @ts-ignore
+        // @ts-expect-error
         expect(rbac.users).toEqual(expected);
 
     });
 
-    test('[removeUserRoles] should return error, trying to invoke method without parameters', () => {
+    test('should return error, trying to invoke method without parameters', () => {
         const rbac = new RBAC(rbacConfig);
-        // @ts-ignore
+        // @ts-expect-error
         expect(rbac.removeUserRoles()).toBeInstanceOf(Error);
     });
 
-    test('[removeUserRoles] should return error, trying to invoke method for undefined user', () => {
+    test('should return error, trying to invoke method for undefined user', () => {
         const rbac = new RBAC(rbacConfig);
         const userId = 'userId';
         expect(rbac.removeUserRoles(userId)).toBeInstanceOf(Error);
     });
 
-    test('[removeUserRoles] should not remove roles', () => {
+    test('should not remove roles', () => {
         const rbac = new RBAC(rbacConfig);
         const userId = 'uniqueId';
         const userRoles = ['user', 'viewer'];
@@ -128,13 +128,13 @@ describe('removeUserRoles method tests suite', () => {
         rbac.addUserRoles(userId, userRoles);
         rbac.removeUserRoles(userId, ['admin']);
 
-        // @ts-ignore
+        // @ts-expect-error
         expect(rbac.users).toEqual(expected);
     });
 });
 
 describe('getUserRoles method tests suite', () => {
-    test('[getUserRoles] should get user role', () => {
+    test('should get user role', () => {
         const rbac = new RBAC(rbacConfig);
         const userId = 'uniqueId';
         const userRoles = ['user'];
@@ -144,13 +144,13 @@ describe('getUserRoles method tests suite', () => {
         expect(rbac.getUserRoles(userId)).toEqual(userRoles);
     });
 
-    test('[getUserRoles] should return error because of incoming data is incorrect, trying to get user without passing userId', () => {
+    test('should return error because of incoming data is incorrect, trying to get user without passing userId', () => {
         const rbac = new RBAC(rbacConfig);
 
         expect(rbac.getUserRoles(undefined)).toBeInstanceOf(Error);
     });
 
-    test('[getUserRoles] should return error because of incoming data is incorrect, trying to get user without adding it before', () => {
+    test('should return error because of incoming data is incorrect, trying to get user without adding it before', () => {
         const rbac = new RBAC(rbacConfig);
         const userId = 'uniqueId';
 
@@ -159,7 +159,7 @@ describe('getUserRoles method tests suite', () => {
 });
 
 describe('isAllowed method tests suite', () => {
-    test('[isAllowed] should return correct isAllowed result, user do not have permission', () => {
+    test('should return correct isAllowed result, user do not have permission', () => {
         const rbac = new RBAC(rbacConfig);
         const userId = 'uniqueId';
         const userRoles = ['manager'];
@@ -170,7 +170,7 @@ describe('isAllowed method tests suite', () => {
         expect(rbac.isAllowed(userId, permissionId)).toEqual(false);
     });
 
-    test('[isAllowed] should return correct isAllowed result, user have permission', () => {
+    test('should return correct isAllowed result, user have permission', () => {
         const rbac = new RBAC(rbacConfig);
         const userId = 'uniqueId';
         const userRoles = ['manager', 'user'];
@@ -181,14 +181,14 @@ describe('isAllowed method tests suite', () => {
         expect(rbac.isAllowed(userId, permissionId)).toEqual(true);
     });
 
-    test('[isAllowed] should return error because of incoming data is incorrect, trying to get permission for user without passing permissionId', () => {
+    test('should return error because of incoming data is incorrect, trying to get permission for user without passing permissionId', () => {
         const rbac = new RBAC(rbacConfig);
         const userId = 'uniqueId';
 
         expect(rbac.isAllowed(userId, undefined)).toBeInstanceOf(Error);
     });
 
-    test('[isAllowed] should return error because of incoming data is incorrect, trying to get permission for user which was not defined', () => {
+    test('should return error because of incoming data is incorrect, trying to get permission for user which was not defined', () => {
         const rbac = new RBAC(rbacConfig);
         const userId = 'uniqueId';
         const permissionId = '3';
@@ -198,14 +198,14 @@ describe('isAllowed method tests suite', () => {
 });
 
 describe('extendRole method tests suite', () => {
-    test('[extendRole] should return error because of incoming data is incorrect, trying to extend role without passing extending roles', () => {
+    test('should return error because of incoming data is incorrect, trying to extend role without passing extending roles', () => {
         const rbac = new RBAC(rbacConfig);
         const role = 'user';
 
         expect(rbac.extendRole(role, [])).toBeInstanceOf(Error);
     });
 
-    test('[extendRole] should return error because of incoming data is incorrect, trying to extend role which was not defined', () => {
+    test('should return error because of incoming data is incorrect, trying to extend role which was not defined', () => {
         const rbac = new RBAC(rbacConfig);
         const role = 'is not defined role';
         const extendingRoles = ['user'];
@@ -213,7 +213,7 @@ describe('extendRole method tests suite', () => {
         expect(rbac.extendRole(role, extendingRoles)).toBeInstanceOf(Error);
     });
 
-    test('[extendRole] should extend role', () => {
+    test('should extend role', () => {
         const rbac = new RBAC(rbacConfig);
         const role = 'manager';
         const extendingRoles = ['user'];
@@ -224,11 +224,11 @@ describe('extendRole method tests suite', () => {
 
         rbac.extendRole(role, extendingRoles);
 
-        // @ts-ignore
+        // @ts-expect-error
         expect(rbac.roles).toEqual(expected);
     });
 
-    test('[extendRole] should return error because of incoming data is incorrect, extending role which was not defined', () => {
+    test('should return error because of incoming data is incorrect, extending role which was not defined', () => {
         const rbac = new RBAC(rbacConfig);
         const role = 'manager';
         const extendingRoles = ['is not defined role'];
@@ -239,18 +239,18 @@ describe('extendRole method tests suite', () => {
 });
 
 describe('generateError method tests suite', () => {
-    test('[generateError] should generate error', () => {
+    test('should generate error', () => {
         const rbac = new RBAC(rbacConfig);
 
-        // @ts-ignore
+        // @ts-expect-error
         expect(rbac.generateError('some error')).toBeInstanceOf(Error);
     });
 
-    test('[generateError] should generate quiet error, with warning in console', () => {
+    test('should generate quiet error, with warning in console', () => {
         rbacConfig.debug = true;
         const rbac = new RBAC(rbacConfig);
 
-        // @ts-ignore
+        // @ts-expect-error
         rbac.generateError('some error');
 
         expect(global.console.warn).toHaveBeenCalled();
@@ -258,7 +258,7 @@ describe('generateError method tests suite', () => {
 });
 
 describe('middleware method tests suite', () => {
-    test('[middleware] should return error and invoke error callback because of incoming data is incorrect', () => {
+    test('should return error and invoke error callback because of incoming data is incorrect', () => {
         const rbac = new RBAC(rbacConfig);
         const errorCallback = jest.fn();
         const successCallback = () => {
@@ -275,7 +275,7 @@ describe('middleware method tests suite', () => {
         expect(errorCallback).toHaveBeenCalled();
     });
 
-    test('[middleware] should invoke error success callback', () => {
+    test('should invoke error success callback', () => {
         const rbac = new RBAC(rbacConfig);
         const userId = 'uniqueId';
         const permissionId = '3';
@@ -295,7 +295,7 @@ describe('middleware method tests suite', () => {
         expect(successCallback).toHaveBeenCalled();
     });
 
-    test('[middleware] should invoke error callback', () => {
+    test('should invoke error callback', () => {
         const rbac = new RBAC(rbacConfig);
         const userId = 'uniqueId';
         const permissionId = '2';
